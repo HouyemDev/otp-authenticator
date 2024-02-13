@@ -248,8 +248,7 @@ class Otpa_Logger {
 	public function admin_enqueue_scripts( $hook_suffix ) {
 
 		if ( 'settings_page_otpa' === $hook_suffix ) {
-			//$active_tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
-			$active_tab = filter_input( INPUT_GET, 'tab', 513 );
+			$active_tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
 
 			if ( 'logs-settings' !== $active_tab ) {
 

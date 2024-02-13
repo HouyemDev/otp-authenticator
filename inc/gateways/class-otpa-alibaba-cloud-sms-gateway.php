@@ -74,7 +74,7 @@ class Otpa_Alibaba_Cloud_Sms_Gateway extends Otpa_Abstract_Gateway {
 				);
 			}
 
-			/*if (
+			if (
 				( $this->settings['china_us'] || ! $this->settings['intl'] ) &&
 				( ! isset( $this->settings['template_code'] ) || empty( $this->settings['template_code'] ) )
 			) {
@@ -82,7 +82,7 @@ class Otpa_Alibaba_Cloud_Sms_Gateway extends Otpa_Abstract_Gateway {
 					$missing_field_format,
 					__( 'Template Code (模版CODE)', 'otpa' )
 				);
-			}*/
+			}
 
 			if ( ! isset( $this->settings['signature_name'] ) || empty( $this->settings['signature_name'] ) ) {
 				$errors[] = sprintf(
