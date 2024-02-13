@@ -107,7 +107,7 @@ class Otpa_User_Info {
 		}
 
 		if ( is_admin() ) {
-			$title = apply_filters( 'otpa_profile_info_title', __( 'OTP Authenticator', 'otpa' ) );
+			$title = apply_filters( 'otpa_profile_info_title', __( 'Tunisie SMS Authenticator', 'otpa' ) );
 
 			if ( $show_identifier_field ) {
 				$identifier_field_label       = $this->get_identifier_field_label();

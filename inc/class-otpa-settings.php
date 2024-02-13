@@ -112,7 +112,7 @@ class Otpa_Settings {
 		$href    = admin_url( 'options-general.php?page=otpa' );
 		$link    = ' <a href="' . $href . '">' . __( 'Edit configuration', 'otpa' ) . '</a>';
 		$class   = 'notice notice-error is-dismissible';
-		$message = __( 'OTP Authenticator is not ready. ', 'otpa' );
+		$message = __( 'Tunisie SMS Authenticator is not ready. ', 'otpa' );
 
 		printf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message . $link . $this->error_message ); // @codingStandardsIgnoreLine
 	}
@@ -126,7 +126,7 @@ class Otpa_Settings {
 			)
 		);
 
-		$title         = __( 'OTP Authenticator', 'otpa' );
+		$title         = __( 'Tunisie SMS Authenticator', 'otpa' );
 		$capability    = 'manage_options';
 		$menu_slug     = 'otpa';
 		$parent_slug   = 'options-general.php';
@@ -178,7 +178,9 @@ class Otpa_Settings {
 			wp_die( __( 'Sorry, you are not allowed to access this page.', 'otpa' ) ); // @codingStandardsIgnoreLine
 		}
 
-		$active_tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
+		//$active_tab = filter_input( INPUT_GET, 'tab', FILTER_SANITIZE_STRING );
+		$active_tab = filter_input( INPUT_GET, 'tab', 513 );
+
 		$active_tab = ( $active_tab ) ? $active_tab : 'settings';
 
 		do_action( 'otpa_settings_page', $active_tab );

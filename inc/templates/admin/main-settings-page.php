@@ -4,7 +4,7 @@
 
 ?>
 <div class="wrap">
-	<h1><?php esc_html_e( 'OTP Authenticator', 'otpa' ); ?></h1>
+	<h1><?php esc_html_e( 'Tunisie SMS Authenticator', 'otpa' ); ?></h1>
 	<h2 class="nav-tab-wrapper">
 		<?php do_action( 'otpa_before_tabs_settings', $active_tab ); ?>
 		<?php do_action( 'otpa_before_main_tab_settings', $active_tab ); ?>

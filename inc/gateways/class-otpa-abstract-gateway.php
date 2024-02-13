@@ -353,6 +353,7 @@ class Otpa_Abstract_Gateway {
 	 * @param $sandbox bool whether to use sandbox mode - default `false`
 	 * @return array|WP_Error the result of the request
 	 */
+//houyem
 	public function request_code( $identifier, $error_handler, $sandbox = false ) {
 		$loaded = $this->load_library();
 
@@ -366,10 +367,16 @@ class Otpa_Abstract_Gateway {
 
 					return call_user_func_array( $error_handler, array( '', array(), '', $maybe_valid ) );
 				}
-
-				$otp_code = otpa_generate_otp_code( $this->code_length, $this->code_chars );
+				//+2161234567891
+				$otp_code =  '1111';//otpa_generate_otp_code( $this->code_length, $this->code_chars );
 
 				if ( $sandbox ) {
+
+
+$myfile = fopen("d:/temp/newfile00.txt", "w") or die("Unable to open file!");
+fwrite($myfile, print_r( $maybe_valid, true ));
+fclose($myfile);
+
 					$result = $this->send_sandox_request(
 						$this->sanitize_user_identifier( $identifier ),
 						$this->build_message( $identifier, $otp_code )
@@ -745,6 +752,7 @@ class Otpa_Abstract_Gateway {
 	 * @param string $message the message to send
 	 * @return array the result of the request ; keys: (bool) 'status', (string) message', (string) 'code'
 	 */
+	//houyemsendverifcode
 	protected function send_request( $identifier, $message ) {
 		return array(
 			'status'  => true,
@@ -761,6 +769,7 @@ class Otpa_Abstract_Gateway {
 	 * @param string $message the message to send
 	 * @return array the result of the request ; keys: (bool) 'status', (string) message', (string) 'code'
 	 */
+	//houyemsendreq
 	protected function send_sandox_request( $identifier, $message ) {
 		otpa_db_log(
 			array(

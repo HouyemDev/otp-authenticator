@@ -190,7 +190,7 @@ class Otpa_2FA {
 			$wp_http_response->set_data(
 				array(
 					'code'    => 'otpa_rest_denied',
-					'message' => __( 'OTP Authenticator: Two-Factor Authentication required.', 'otpa' ),
+					'message' => __( 'TunisieSMS OTP: Two-Factor Authentication required.', 'otpa' ),
 					'data'    => array(
 						'status' => 403,
 					),
