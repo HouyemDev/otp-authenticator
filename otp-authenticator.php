@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Tunisie SMS Authenticator
+Plugin Name: OTP Authenticator
 Plugin URI: https://github.com/froger-me/otp-authenticator
 Description: One-Time Password Authentication: add Two-Factor Authentication, Passwordless Authentication and Account Validation to your WordPress website
 Version: 1.1

@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Tunisie SMS Authenticator\n"
+"Project-Id-Version: OTP Authenticator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-08-22 17:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -70,7 +70,7 @@ msgid "Two-Factor Authentication"
 msgstr ""
 
 #: inc/class-otpa-2fa.php:193
-msgid "Tunisie SMS Authenticator: Two-Factor Authentication required."
+msgid "OTP Authenticator: Two-Factor Authentication required."
 msgstr ""
 
 #: inc/class-otpa-2fa.php:426
@@ -116,13 +116,13 @@ msgid "Edit configuration"
 msgstr ""
 
 #: inc/class-otpa-settings.php:115
-msgid "Tunisie SMS Authenticator is not ready. "
+msgid "OTP Authenticator is not ready. "
 msgstr ""
 
 #. Name of the plugin
 #: inc/class-otpa-settings.php:129 inc/class-otpa-user-info.php:110
 #: inc/templates/admin/main-settings-page.php:7
-msgid "Tunisie SMS Authenticator"
+msgid "OTP Authenticator"
 msgstr ""
 
 #: inc/class-otpa-settings.php:178
@@ -545,7 +545,7 @@ msgid "Validate your account"
 msgstr ""
 
 #: inc/class-otpa-account-validation.php:111
-msgid "Tunisie SMS Authenticator: Account Validation required."
+msgid "OTP Authenticator: Account Validation required."
 msgstr ""
 
 #: inc/class-otpa-account-validation.php:239

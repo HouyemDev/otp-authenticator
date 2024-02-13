@@ -44,21 +44,21 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 			if ( ! isset( $this->settings['account_sid'] ) || empty( $this->settings['account_sid'] ) ) {
 				$errors[] = sprintf(
 					$missing_field_format,
-					__( 'Account Key', 'otpa' )
+					__( 'Account SID', 'otpa' )
 				);
 			}
 
 			if ( ! isset( $this->settings['auth_token'] ) || empty( $this->settings['auth_token'] ) ) {
 				$errors[] = sprintf(
 					$missing_field_format,
-					__( 'Auth Sender', 'otpa' )
+					__( 'Auth Token', 'otpa' )
 				);
 			}
 
 			if ( ! isset( $this->settings['from_number'] ) || empty( $this->settings['from_number'] ) ) {
 				$errors[] = sprintf(
 					$missing_field_format,
-					__( 'Tunisie SMS Phone Number', 'otpa' )
+					__( 'Twilio Phone Number', 'otpa' )
 				);
 			}
 
@@ -86,34 +86,34 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 			'main'           => array(
 				array(
 					'id'    => 'account_sid',
-					'label' => __( 'Account Key', 'otpa' ) . ' <span class="required">*</span>',
+					'label' => __( 'Account SID', 'otpa' ) . ' <span class="required">*</span>',
 					'type'  => 'input_password',
 					'class' => 'regular-text toggle',
 					'help'  => sprintf(
 						// translators: %s is the link to the Twilio console.
-						__( 'The Account Key found in the %s.', 'otpa' ),
+						__( 'The Account SID found in the %s.', 'otpa' ),
 						'<a target="_blank" href="https://www.twilio.com/console">' . __( 'Twilio console' ) . '</a>'
 					),
 				),
 				array(
 					'id'    => 'auth_token',
-					'label' => __( 'Auth Sender', 'otpa' ) . ' <span class="required">*</span>',
+					'label' => __( 'Auth Token', 'otpa' ) . ' <span class="required">*</span>',
 					'type'  => 'input_password',
 					'class' => 'regular-text toggle',
 					'help'  => sprintf(
 						// translators: %s is the link to the Twilio console.
-						__( 'The Auth Sender found in the %s.', 'otpa' ),
+						__( 'The Auth Token found in the %s.', 'otpa' ),
 						'<a target="_blank" href="https://www.twilio.com/console">' . __( 'Twilio console' ) . '</a>'
 					),
 				),
 				array(
 					'id'    => 'from_number',
-					'label' => __( 'Tunisie SMS Phone Number', 'otpa' ) . ' <span class="required">*</span>',
+					'label' => __( 'Twilio Phone Number', 'otpa' ) . ' <span class="required">*</span>',
 					'type'  => 'input_password',
 					'class' => 'regular-text toggle',
 					'help'  => sprintf(
 						// translators: %s is the link to the Twilio console.
-						__( 'A Tunisie SMS phone number used to send the messages, found in the %s.', 'otpa' ),
+						__( 'A Twilio phone number used to send the messages, found in the %s.', 'otpa' ),
 						'<a target="_blank" href="https://www.twilio.com/console">' . __( 'Twilio console' ) . '</a>'
 					),
 				),
@@ -431,7 +431,7 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 			return false;
 		}
 	}
-//houyemSandboxrequest
+
 	protected function send_sandox_request( $phone, $otp_code ) {
 
 		otpa_db_log(

@@ -225,9 +225,7 @@ class Otpa {
 	}
 
 	public function handle_api_request() {
-		// L2T: Edited by Amine 2024-02-12
-		// $nonce = filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_STRING );
-		$nonce = filter_input( INPUT_POST, 'nonce', FILTER_UNSAFE_RAW );
+		$nonce = filter_input( INPUT_POST, 'nonce', FILTER_SANITIZE_STRING );
 
 		if ( ! wp_verify_nonce( $nonce, 'otpa_nonce' ) ) {
 			wp_send_json_error(
@@ -237,12 +235,8 @@ class Otpa {
 			);
 		}
 
-		// L2T: Edited by Amine 2024-02-12
-		// $otp_type      = filter_input( INPUT_POST, 'otpType', FILTER_SANITIZE_STRING );
-		// $handler       = filter_input( INPUT_POST, 'handler', FILTER_SANITIZE_STRING );
-		$otp_type      = filter_input( INPUT_POST, 'otpType', FILTER_UNSAFE_RAW );
-		$handler       = filter_input( INPUT_POST, 'handler', FILTER_UNSAFE_RAW );
-		 
+		$otp_type      = filter_input( INPUT_POST, 'otpType', FILTER_SANITIZE_STRING );
+		$handler       = filter_input( INPUT_POST, 'handler', FILTER_SANITIZE_STRING );
 		$valid_handler = apply_filters(
 			'otpa_otp_api_valid_callback',
 			method_exists( $this, $this->sanitizer_api_handler( $handler ) ),
@@ -266,9 +260,7 @@ class Otpa {
 		);
 		$args     = apply_filters(
 			'otpa_otp_api_callback_args',
-			// L2T: Edited by Amine 2024-02-12
-			// filter_input( INPUT_POST, 'payload', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY ),
-			filter_input( INPUT_POST, 'payload', FILTER_UNSAFE_RAW, FILTER_REQUIRE_ARRAY ),
+			filter_input( INPUT_POST, 'payload', FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY ),
 			$handler,
 			$otp_type
 		);
@@ -613,22 +605,16 @@ class Otpa {
 	}
 
 	public function verify_otp_code( $payload ) {
-		
 
 		if ( isset( $payload['code'] ) ) {
 			$input_code = $payload['code'];
-			$user       = wp_get_current_user();			
+			$user       = wp_get_current_user();
 
 			if ( $user->ID ) {
 				$blocked = $this->is_otp_blocked( $user->ID );
 
 				if ( ! $blocked ) {
 					$meta = get_user_meta( $user->ID, 'otpa_verification_code', true );
-
-
-					$myfile4 = fopen("d:/temp/newfile4.txt", "w") or die("Unable to open file!");
-			fwrite($myfile4, $input_code .'----'.$meta['otp_code']);
-			fclose($myfile4);
 
 					if ( $meta && isset( $meta['otp_code'], $meta['expiry'] ) ) {
 
@@ -666,7 +652,7 @@ class Otpa {
 						}
 
 						delete_user_meta( $user->ID, 'otpa_verification_code' );
-					} elseif ( $result && ! is_wp_error( $result ) ) {
+					} elseif ( ! is_wp_error( $result ) ) {
 						$verify_count = $this->process_otp_verify( $user->ID, false );
 						$result       = self::get_wp_error(
 							'OTPA_CODE_NOT_FOUND',

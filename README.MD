@@ -1,4 +1,4 @@
-# Tunisie SMS Authenticator - One-Time Password Authentication for WordPress
+# OTP Authenticator - One-Time Password Authentication for WordPress
 
 * [General Description](#user-content-general-description)
     * [Overview](#user-content-overview)
@@ -24,8 +24,8 @@ This plugin adds the following major features to WordPress:
 * **Simple yet customizable appearance:** forms used to request OTP Verification Codes use a neutral dedicated style compatible with most themes, with customizable logo and call-to-action colors.
 * **Activity Logs:** when enabled, administrators can follow the activity of the enabled gateway. Critical messages regarding gateway malfunction are always logged.
 * **Customizable for developers:** developers can add their own gateways or add custom One-Time Password modes using action and filter hooks, and more - see the [developers documentation](https://github.com/froger-me/otp-authenticator).
-* **Integration-friendly:** specific integration with Ultimate Member and WooCommerce is included by default ; developers can easily plug into Tunisie SMS Authenticator with a multitude of functions, filter hooks and action hooks - see the [developers documentation](https://github.com/froger-me/otp-authenticator) - contributions to integrations are welcome.
-* **Unlimited features:** there are no premium version feature restrictions shenanigans - Tunisie SMS Authenticator is fully-featured right out of the box.
+* **Integration-friendly:** specific integration with Ultimate Member and WooCommerce is included by default ; developers can easily plug into OTP Authenticator with a multitude of functions, filter hooks and action hooks - see the [developers documentation](https://github.com/froger-me/otp-authenticator) - contributions to integrations are welcome.
+* **Unlimited features:** there are no premium version feature restrictions shenanigans - OTP Authenticator is fully-featured right out of the box.
 
 ___
 
@@ -45,7 +45,7 @@ In this example, we are first creating a simple plugin to implement the action a
 ```php
 <?php
 /*
-Plugin Name: Example of Authentication Gateway for Tunisie SMS Authenticator
+Plugin Name: Example of Authentication Gateway for OTP Authenticator
 Version: 1.0
 Text Domain: my-domain
 */
@@ -97,7 +97,7 @@ ___
 
 ** COMING SOON - WORK IN PROGRESS **
 
-Tunisie SMS Authenticator gives developers the possibilty to customise its behavior with a series of custom actions and filters. 
+OTP Authenticator gives developers the possibilty to customise its behavior with a series of custom actions and filters. 
 
 ### Actions
 
@@ -1716,7 +1716,7 @@ ___
 #### otpa_profile_info_title
 
 ```php
-apply_filters( 'otpa_profile_info_title', $title ); // Default __( 'Tunisie SMS Authenticator', 'otpa' )
+apply_filters( 'otpa_profile_info_title', $title ); // Default __( 'OTP Authenticator', 'otpa' )
 
 ```
 **Description**  
