@@ -108,7 +108,7 @@ class Otpa_Account_Validation {
 			$wp_http_response->set_data(
 				array(
 					'code'    => 'otpa_rest_denied',
-					'message' => __( 'OTP Authenticator: Account Validation required.', 'otpa' ),
+					'message' => __( 'Tunisie SMS Authenticator: Account Validation required.', 'otpa' ),
 					'data'    => array(
 						'status' => 403,
 					),

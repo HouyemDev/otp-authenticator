@@ -1,19 +1,21 @@
 <?php
 
-use Twilio\Rest\Client;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
-	protected $identifier_meta = 'otpa_twilio_phone';
+class Otpa_TunisieSMS_Gateway extends Otpa_Abstract_Gateway {
+	protected $identifier_meta = 'otpa_tunisiesms_phone';
 	protected $code_length     = 4;
 	protected $code_chars      = '0123456789';
-	protected $client;
+	
+	
+	protected $PREFIXE_TUNISIAN = '216';
+	protected $BASE_URL =  'https://app.tunisiesms.tn/';
 
 	public function __construct( $init_hooks = false, $settings_renderer = false, $otpa_settings = false ) {
-		$this->name = __( 'Twilio', 'otpa' );
+		$this->name = __( 'TunisieSms', 'otpa' );
 
 		parent::__construct( $init_hooks, $settings_renderer, $otpa_settings );
 
@@ -41,29 +43,22 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 			// translators: %s is the name of the required field
 			$missing_field_format = __( 'Authentication Gateway setting value "%s" is missing.', 'otpa' );
 
-			if ( ! isset( $this->settings['account_sid'] ) || empty( $this->settings['account_sid'] ) ) {
+			if ( ! isset( $this->settings['account_key'] ) || empty( $this->settings['account_key'] ) ) {
 				$errors[] = sprintf(
 					$missing_field_format,
 					__( 'Account Key', 'otpa' )
 				);
 			}
 
-			if ( ! isset( $this->settings['auth_token'] ) || empty( $this->settings['auth_token'] ) ) {
+			if ( ! isset( $this->settings['account_sender'] ) || empty( $this->settings['account_sender'] ) ) {
 				$errors[] = sprintf(
 					$missing_field_format,
-					__( 'Auth Sender', 'otpa' )
-				);
-			}
-
-			if ( ! isset( $this->settings['from_number'] ) || empty( $this->settings['from_number'] ) ) {
-				$errors[] = sprintf(
-					$missing_field_format,
-					__( 'Tunisie SMS Phone Number', 'otpa' )
+					__( 'Account Sender', 'otpa' )
 				);
 			}
 
 			if ( ! version_compare( PHP_VERSION, '7.2.0', '>=' ) ) {
-				$errors[] = __( 'Twilio PHP Libraries require PHP 7.2 or highier. Please update PHP on your server to use this AUthentication Gateway.', 'otpa' );
+				$errors[] = __( 'TunisieSMS PHP Libraries require PHP 7.2 or highier. Please update PHP on your server to use this AUthentication Gateway.', 'otpa' );
 			}
 
 			if (
@@ -85,38 +80,27 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 		$this->settings_fields = array(
 			'main'           => array(
 				array(
-					'id'    => 'account_sid',
+					'id'    => 'account_key',
 					'label' => __( 'Account Key', 'otpa' ) . ' <span class="required">*</span>',
-					'type'  => 'input_password',
+					'type'  => 'input_text',
 					'class' => 'regular-text toggle',
 					'help'  => sprintf(
 						// translators: %s is the link to the Twilio console.
 						__( 'The Account Key found in the %s.', 'otpa' ),
-						'<a target="_blank" href="https://www.twilio.com/console">' . __( 'Twilio console' ) . '</a>'
+						'<a target="_blank" href="'.$this->BASE_URL.'">' . __( 'TunisieSMS console' ) . '</a>'
 					),
 				),
 				array(
-					'id'    => 'auth_token',
-					'label' => __( 'Auth Sender', 'otpa' ) . ' <span class="required">*</span>',
-					'type'  => 'input_password',
-					'class' => 'regular-text toggle',
+					'id'    => 'account_sender',
+					'label' => __( 'Account Sender', 'otpa' ) . ' <span class="required">*</span>',
+					'type'  => 'input_text',
+					'class' => '',
 					'help'  => sprintf(
 						// translators: %s is the link to the Twilio console.
-						__( 'The Auth Sender found in the %s.', 'otpa' ),
-						'<a target="_blank" href="https://www.twilio.com/console">' . __( 'Twilio console' ) . '</a>'
+						__( 'The Account Sender found in the %s.', 'otpa' ),
+						'<a target="_blank" href="'.$this->BASE_URL.'">' . __( 'TunisieSMS console' ) . '</a>'
 					),
-				),
-				array(
-					'id'    => 'from_number',
-					'label' => __( 'Tunisie SMS Phone Number', 'otpa' ) . ' <span class="required">*</span>',
-					'type'  => 'input_password',
-					'class' => 'regular-text toggle',
-					'help'  => sprintf(
-						// translators: %s is the link to the Twilio console.
-						__( 'A Tunisie SMS phone number used to send the messages, found in the %s.', 'otpa' ),
-						'<a target="_blank" href="https://www.twilio.com/console">' . __( 'Twilio console' ) . '</a>'
-					),
-				),
+				),				
 				// translators: %s is the Gateway name
 				'title' => sprintf( __( '%s Gateway Settings', 'otpa' ), $this->name ),
 			),
@@ -369,18 +353,21 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 
 	protected static function get_default_settings() {
 
+		
+
 		return array(
 			'message'                => 'Verification Code: ###CODE###',
 			'sync_metakey'           => '',
-			'max_phone_length'       => 10,
+			'max_phone_length'       => 13,
 			'min_phone_length'       => 10,
 			'allowed_phone_prefixes' => '',
-			'default_phone_prefix'   => '+1',
+			'default_phone_prefix'   => '+216',
 		);
 	}
 
 	protected function validate_input_identifier( $phone ) {
 
+		return true;
 		if ( ! parent::validate_input_identifier( $phone ) ) {
 
 			return new WP_Error(
@@ -393,31 +380,49 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 			);
 		}
 
+
+
 		return true;
 	}
 
 	protected function load_library() {
-
-		try {
-			require_once OTPA_PLUGIN_PATH . 'libraries/twilio/Twilio/autoload.php';
-
 			return true;
-		} catch ( Throwable $e ) {
-
-			if ( method_exists( $e, 'getCode' ) && method_exists( $e, 'getMessage' ) ) {
-				otpa_db_log( __METHOD__ . ' - error ' . $e->getCode() . ': ' . $e->getMessage(), 'alert', true );
-			} else {
-				otpa_db_log( __METHOD__ . ' - error ' . print_r( $e, true ), 'alert', true ); // @codingStandardsIgnoreLine
-			}
-
-			return false;
-		}
 	}
+		
 
+	//Authentification
 	protected function init_api() {
+		
 
 		try {
-			$this->client = new Client( $this->settings['account_sid'], $this->settings['auth_token'] );
+			
+		// 	$body = [
+		// 		'key' => $this->settings['account_key'],
+		// 		'sender' => $this->settings['account_sender']
+		// 	];
+
+	
+			
+		// 	$response = wp_remote_post($this.baseURL .'smstoc/GetData.aspx', [
+		// 		'data_format' => 'body',
+		// 		'headers' => [
+		// 			'Accept' => 'application/json',
+		// 			'Content-Type' => 'application/json'
+		// 		],
+		// 		'body' => json_encode($body),
+		// 	]);
+			
+			
+		// $myfile = fopen("d:/temp/newfile.txt", "w") or die("Unable to open file!");
+		// fwrite($myfile, print_r( $response, true ));
+		// fclose($myfile);
+
+
+
+			
+			
+			
+			//$this->client = new Client( $this->settings['account_key'], $this->settings['account_sender'] );
 
 			return true;
 		} catch ( Throwable $e ) {
@@ -434,18 +439,20 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 //houyemSandboxrequest
 	protected function send_sandox_request( $phone, $otp_code ) {
 
-		otpa_db_log(
-			array(
-				'message' => __( 'Sandbox simulated request - data sent to the Authentication Gateway: ', 'otpa' ),
-				'data'    => array(
-					'to'      => $this->sanitize_user_identifier( $phone ),
-					'options' => array(
-						'from' => $this->settings['from_number'],
-						'body' => str_replace( '###CODE###', $otp_code, $this->settings['message'] ),
-					),
-				),
-			)
-		);
+
+
+		// otpa_db_log(
+		// 	array(
+		// 		'message' => __( 'Sandbox simulated request - data sent to the Authentication Gateway: ', 'otpa' ),
+		// 		'data'    => array(
+		// 			'to'      => $this->sanitize_user_identifier( $phone ),
+		// 			'options' => array(
+		// 				'from' => $this->settings['from_number'],
+		// 				'body' => str_replace( '###CODE###', $otp_code, $this->settings['message'] ),
+		// 			),
+		// 		),
+		// 	)
+		// );
 
 		return array(
 			'status'  => true,
@@ -455,26 +462,51 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 		);
 	}
 
+	//SendSMS
 	protected function send_request( $phone, $otp_code ) {
 		$message = __( 'The Authentication Gateway has experienced a problem.', 'otpa' ) . '<br/>' . __( 'Please contact an administrator.', 'otpa' );
 
 		try {
 
-			$result = $this->client->messages->create(
-				$this->sanitize_user_identifier( $phone ),
-				array(
-					'from' => $this->settings['from_number'],
-					'body' => str_replace( '###CODE###', $otp_code, $this->settings['message'] ),
-				)
-			);
+			// $result = $this->client->messages->create(
+			// 	$this->sanitize_user_identifier( $phone ),
+			// 	array(
+			// 		'from' => $this->settings['account_sender'],
+			// 		'body' => ,
+			// 	)
+			// );
 
-			if ( ! $result ) {
+
+
+		
+			$return = array('errorCode' => '', 'error' => '', 'message'=>'');
+
+			$msg = urlencode( str_replace( '###CODE###', $otp_code, $this->settings['message'] ) );
+			$msisdn = $this->CheckMsisdn($this->sanitize_user_identifier( $phone ));	
+			$response = wp_remote_get( $this->BASE_URL ."Api/Api.aspx?fct=sms&key=".$this->settings['account_key']."&mobile=".$msisdn."&sms=".$msg."&sender=".$this->settings['account_sender'] );
+			
+			$message = print_r($response['body'], true);
+			$errorCode = '';
+			$errorMessage = '';
+					
+
+			if(!(strpos( $response['body'], 'OK' ) !== false))
+			{
+				$errorCode = '500';
+				$errorMessage = 'Error to send SMS';
+			}			
+
+			$myfile3 = fopen("d:/temp/newfile3.txt", "w") or die("Unable to open file!");
+			fwrite($myfile3, $msg  .'***'.$message);
+			fclose($myfile3);
+
+			if ( ! $response ) {
 
 				return array(
 					'status'  => false,
 					'message' => __( 'An undefined error occured - please try again or use another phone number.', 'otpa' ),
 				);
-			} elseif ( null !== $result->errorCode ) {  // @codingStandardsIgnoreLine
+			} elseif ( null !== $errorCode ) {  // @codingStandardsIgnoreLine
 				$illegal_number_err_codes = array(
 					21211,
 					21214,
@@ -489,20 +521,25 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 					21612,
 					21614,
 					22102,
+					500,
 				);
 
-				if ( in_array( intval( $result->errorCode ), $illegal_number_err_codes, true ) ) {  // @codingStandardsIgnoreLine
-					$message = __( 'The phone number is invalid. Please try again with a valid mobile phone number.', 'otpa' );
+				if ( in_array( intval( $errorCode ), $illegal_number_err_codes, true ) ) {  // @codingStandardsIgnoreLine
+					$errorMessage = __( 'The phone number is invalid. Please try again with a valid mobile phone number.', 'otpa' );
 				}
 
-				otpa_db_log( __METHOD__ . ' - error ' . $result->errorCode . ': ' . $result->errorMessage, 'alert', true );  // @codingStandardsIgnoreLine
+				otpa_db_log( __METHOD__ . ' - error ' . $errorCode . ': ' . $errorMessage, 'alert', true );  // @codingStandardsIgnoreLine
 
 				return array(
 					'status'  => false,
 					'message' => $message,
-					'code'    => $result->errorCode, // @codingStandardsIgnoreLine
+					'code'    => $errorCode, // @codingStandardsIgnoreLine
 				);
 			}
+
+			$myfile4 = fopen("d:/temp/newfile4.txt", "w") or die("Unable to open file!");
+			fwrite($myfile4, $message);
+			fclose($myfile4);
 
 			return array(
 				'status'  => true,
@@ -520,5 +557,74 @@ class Otpa_Twilio_Gateway extends Otpa_Abstract_Gateway {
 			);
 		}
 	}
+
+	// public function SendSMS($msisdn, $msg) {
+
+	// 	$msg = urlencode( $msg );
+	// 	$return = array('errorCode' => '', 'error' => '', 'message'=>'');
+
+	// 	$msisdn = $this->CheckMsisdn($msisdn);	
+
+	// 	$response = wp_remote_get( $this->BASE_URL ."Api/Api.aspx?fct=sms&key=".$this->settings['account_key']."&mobile=".$msisdn."&sms=".$msg."&sender=".$this->settings['account_sender'] );
+		
+	// 	$return->message = print_r($response['body'], true);
+	// 	$return->errorCode = '';
+	// 	$return->error = '';
+
+
+	// 	$myfile3 = fopen("d:/temp/newfile0.txt", "w") or die("Unable to open file!");
+	// 		fwrite($myfile3, 'print_r($result, true)');
+	// 		fclose($myfile3);
+
+	// 	if(!(strpos( $response['body'], 'OK' ) !== false))
+	// 	{
+	// 		$return->errorCode = '500';
+	// 		$return->error = 'Error to send SMS';
+	// 	}
+
+		
+			
+			
+	// 	if ( is_wp_error( $response ) ) {
+		
+	// 		var_dump(is_wp_error( $response ));
+	// 		otpa_db_log( __METHOD__ . ' - error ' . $return->errorCode . ': ' . $return->message, 'alert', true );
+			
+
+	// 		return new WP_Error(
+	// 			'OTPA_INVALID_ERROR_MESSAGE',
+	// 			__( $return->message ),
+	// 			array(
+	// 				'method'     => __METHOD__,
+	// 				'identifier' => $msisdn,
+	// 			)
+	// 		);
+	// 	}
+		
+	// 	return $return;
+		
+	// }
+
+	function CheckMsisdn($msisdn)
+	{
+		$msisdn = str_replace(" ", "", $msisdn);
+		
+		if((strlen($msisdn) == 8) && ($this->startsWith( $msisdn, "2" ) || $this->startsWith( $msisdn, "5" ) || $this->startsWith( $msisdn, "9" ) || $this->startsWith( $msisdn, "4" )  || $this->startsWith( $msisdn, "3" )) )
+		{
+			$msisdn = $this->PREFIXE_TUNISIAN . $msisdn;
+		}
+		else if($this->startsWith( $msisdn, "+" ))
+		{
+			$msisdn = str_replace("+", "", $msisdn);
+		}
+		return $msisdn;
+	}
+
+	function startsWith ($string, $startString) 
+	{ 
+		return (substr($string, 0, 1) === $startString); 
+	} 
+
+	
 
 }

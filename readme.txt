@@ -1,4 +1,4 @@
-=== OTP Authenticator  ===
+=== Tunisie SMS Authenticator  ===
 Contributors: frogerme
 Tags: 2fa, OTP, passwordless login
 Requires at least: 4.9.5
@@ -27,12 +27,12 @@ This plugin adds the following major features to WordPress:
 * **Simple yet customizable appearance:** forms used to request OTP Verification Codes use a neutral dedicated style compatible with most themes, with customizable logo and call-to-action colors.
 * **Activity Logs:** when enabled, administrators can follow the activity of the enabled gateway. Critical messages regarding gateway malfunction are always logged.
 * **Customizable for developers:** developers can add their own gateways or add custom One-Time Password modes using action and filter hooks, and more - see the [developers documentation](https://github.com/froger-me/otp-authenticator).
-* **Integration-friendly:** specific integration with Ultimate Member and WooCommerce is included by default ; developers can easily plug into OTP Authenticator with a multitude of functions, filter hooks and action hooks - see the [developers documentation](https://github.com/froger-me/otp-authenticator) - contributions to integrations are welcome.
-* **Unlimited features:** there are no premium version feature restrictions shenanigans - OTP Authenticator is fully-featured right out of the box.
+* **Integration-friendly:** specific integration with Ultimate Member and WooCommerce is included by default ; developers can easily plug into Tunisie SMS Authenticator with a multitude of functions, filter hooks and action hooks - see the [developers documentation](https://github.com/froger-me/otp-authenticator) - contributions to integrations are welcome.
+* **Unlimited features:** there are no premium version feature restrictions shenanigans - Tunisie SMS Authenticator is fully-featured right out of the box.
 
 == Troubleshooting ==
 
-OTP Authenticator is regularly updated, and bug reports are welcome, preferably on [Github](https://github.com/froger-me/otp-authenticator/issues), especially for advanced troubleshooting.  
+Tunisie SMS Authenticator is regularly updated, and bug reports are welcome, preferably on [Github](https://github.com/froger-me/otp-authenticator/issues), especially for advanced troubleshooting.  
 
 Each **bug** report will be addressed in a timely manner, but general inquiries and issues reported on the WordPress forum may take significantly longer to receive a response.  
 
@@ -42,11 +42,11 @@ Each **bug** report will be addressed in a timely manner, but general inquiries 
 
 == Integrations ==
 
-Although OTP Authenticator is designed to work out of the box with most combinations of WordPress plugins and themes, there are some edge cases necessitating integration, with code included in the core files of OTP Authenticator executing under certain conditions.  
+Although Tunisie SMS Authenticator is designed to work out of the box with most combinations of WordPress plugins and themes, there are some edge cases necessitating integration, with code included in the core files of Tunisie SMS Authenticator executing under certain conditions.  
 
-Integrations added to core are limited to popular plugins and themes: any extra code specific to a handful of installations require a separate custom integration plugin not shared with the community (decision at the discretion of the OTP Authenticator plugin author).  
+Integrations added to core are limited to popular plugins and themes: any extra code specific to a handful of installations require a separate custom integration plugin not shared with the community (decision at the discretion of the Tunisie SMS Authenticator plugin author).  
 
-If such need for plugin integration arises, website administrators may contact the author of OTP Authenticator to become a patron.  
+If such need for plugin integration arises, website administrators may contact the author of Tunisie SMS Authenticator to become a patron.  
 
 **All integrations are to be funded by plugin users, with downpayment and delivery payment, at the plugin author's discretion, without exception**.  
 The patron in return may be credited with their name (or company name) and a link to a page of their choice in the plugin's Changelog.  
@@ -66,7 +66,7 @@ This section describes how to install the plugin and get it working.
 3. Account Validation Form
 4. Set One-Time Password Identifier Form
 5. WordPress login with Passwordless Authentication link 
-6. OTP Authenticator General Settings
+6. Tunisie SMS Authenticator General Settings
 7. OTP Form Style Settings
 8. WordPress Email Authentication Gateway Settings
 9. Twilio Authentication Gateway Settings
